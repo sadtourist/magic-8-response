@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gabriella's Non-Response Oracle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- IM Fell English font -->
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+
+  <style>
+  :root {
+    --bg: #1E5677;
+    --text-main: #f9fafb;
+    --text-soft: #cbd5f5;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: "IM Fell English", serif;
+  }
+
+  .wrap {
+    text-align: center;
+    padding: 1.5rem;
+    max-width: 700px; /* wider container so the ball can get bigger */
+    width: 100%;
+  }
+
+  h1 {
+    margin: 0 0 0.6rem;
+    font-size: 1.35rem;     /* smaller */
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    margin: 0 0 2rem;
+    font-size: 0.95rem;      /* smaller */
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  .ball-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* MUCH BIGGER BALL */
+    width: min(90vw, 480px);   /* was 360px before */
+    aspect-ratio: 1 / 1;
+
+    cursor: pointer;
+    margin: 0 auto 2rem;
+    position: relative;
+  }
+
+  .ball {
+    width: 100%;
+    height: 100%;
+    display: block;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .ball-container.shake {
+    animation: shake 0.45s ease-in-out;
+  }
+
+  @keyframes shake {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    15%  { transform: translate(-4px, 2px) rotate(-2deg); }
+    30%  { transform: translate(4px, -2px) rotate(2deg); }
+    45%  { transform: translate(-3px, 1px) rotate(-1.5deg); }
+    60%  { transform: translate(3px, -1px) rotate(1.5deg); }
+    75%  { transform: translate(-2px, 1px) rotate(-1deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  .footer {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;     /* smaller */
+    color: var(--text-soft);
+    opacity: 0.9;
+  }
+</style>
+
+</head>
+<body>
+  <main class="wrap">
+    <h1>Gabriella isn’t responding. What do I do?</h1>
+    <p class="subtitle">
+      Consult the non-response oracle and receive your instructions.
+    </p>
+
+    <div class="ball-container" id="ballContainer" aria-label="Magic 8 ball">
+      <!-- initial image, will be replaced by JS with a random one -->
+      <img id="ballImage" class="ball" src="Messages/1.png" alt="Magic 8 ball" />
+    </div>
+
+    <p class="footer">
+      This was made for funsies by Gabriella, don't take too seriously <3
+    </p>
+  </main>
+
+  <script>
+    // Folder name that contains the PNGs
+    const IMAGE_FOLDER = "Messages";
+
+    // Adjust this if you add or remove images
+    const NUMBER_OF_IMAGES = 18;
+
+    // Build array: ["Messages/1.png", "Messages/2.png", ..., "Messages/18.png"]
+    const allImages = Array.from(
+      { length: NUMBER_OF_IMAGES },
+      (_, i) => `${IMAGE_FOLDER}/${i + 1}.png`
+    );
+
+    const ballContainer = document.getElementById("ballContainer");
+    const ballImage = document.getElementById("ballImage");
+
+    // Pool of remaining images before we repeat any
+    let pool = [...allImages];
+
+    function pickRandom(arr) {
+      const index = Math.floor(Math.random() * arr.length);
+      return { item: arr[index], index };
+    }
+
+    function getNextImage() {
+      // If we've exhausted the pool, reset it
+      if (pool.length === 0) {
+        pool = [...allImages];
+      }
+
+      const { item, index } = pickRandom(pool);
+      // Remove this image from the pool so it won't repeat until cycle restarts
+      pool.splice(index, 1);
+      return item;
+    }
+
+    // Set an initial random image (and remove it from the pool)
+    (function setInitialImage() {
+      const first = getNextImage();
+      ballImage.src = first;
+    })();
+
+    function shakeAndSwap() {
+      ballContainer.classList.add("shake");
+
+      const nextImage = getNextImage();
+
+      // Swap image halfway through the shake
+      setTimeout(() => {
+        ballImage.src = nextImage;
+      }, 180);
+
+      // Remove shake class after animation
+      setTimeout(() => {
+        ballContainer.classList.remove("shake");
+      }, 460);
+    }
+
+    ballContainer.addEventListener("click", shakeAndSwap);
+
+    // Keyboard accessibility
+    ballContainer.tabIndex = 0;
+    ballContainer.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.code === "Space") {
+        event.preventDefault();
+        shakeAndSwap();
+      }
+    });
+  </script>
+</body>
+</html>
