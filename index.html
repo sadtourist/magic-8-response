@@ -33,14 +33,14 @@
   .wrap {
     text-align: center;
     padding: 1.5rem;
-    max-width: 700px; /* wider container so the ball can get bigger */
+    max-width: 800px; /* wider container so the ball can get bigger */
     width: 100%;
   }
 
   h1 {
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.4rem;
     font-size: 1.35rem;     /* smaller */
-    line-height: 1.3;
+    line-height: 1;
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
@@ -49,7 +49,7 @@
     margin: 0 0 2rem;
     font-size: 0.95rem;      /* smaller */
     color: var(--text-soft);
-    line-height: 1.5;
+    line-height: 1.2;
   }
 
   .ball-container {
@@ -57,8 +57,7 @@
     align-items: center;
     justify-content: center;
 
-    /* MUCH BIGGER BALL */
-    width: min(90vw, 480px);   /* was 360px before */
+    width: min(90vw, 500px);   /* was 360px before */
     aspect-ratio: 1 / 1;
 
     cursor: pointer;
@@ -89,7 +88,7 @@
   }
 
   .footer {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     font-size: 0.8rem;     /* smaller */
     color: var(--text-soft);
     opacity: 0.9;
