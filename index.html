@@ -98,6 +98,35 @@
   text-decoration: underline;
 }
 
+    /* Make the oracle card narrower + more elegant on small screens */
+@media (max-width: 480px) {
+  .wrap {
+    max-width: 85%;        /* tighter card width */
+    padding: 1rem;         /* less side padding */
+  }
+
+  h1 {
+    font-size: 1.2rem;     /* scale to match new width */
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .ball-container {
+    width: 80vw;           /* shrink the ball slightly so it fits nicely */
+    margin-bottom: 1.2rem;
+  }
+
+  .footer,
+  .made-with-love {
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+}
+
+
 </style>
 
 </head>
