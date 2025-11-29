@@ -87,12 +87,17 @@
     100% { transform: translate(0, 0) rotate(0deg); }
   }
 
-  .footer {
-    margin-top: 1rem;
-    font-size: 0.8rem;     /* smaller */
-    color: var(--text-soft);
-    opacity: 0.9;
-  }
+  .credit {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.credit a {
+  color: #f9fafb;
+  text-decoration: underline;
+}
+
 </style>
 
 </head>
@@ -108,9 +113,10 @@
       <img id="ballImage" class="ball" src="Messages/1.png" alt="Magic 8 ball" />
     </div>
 
-    <p class="footer">
-      This was made for funsies by Gabriella, don't take too seriously <3
-    </p>
+    <div class="credit">
+  This was made for funsies by Gabriella, don't take too seriously <3  — <a href="https://linktr.ee/gmikiewicz" target="_blank">see more</a>
+</div>
+
   </main>
 
   <script>
@@ -182,5 +188,6 @@
       }
     });
   </script>
+  
 </body>
 </html>
